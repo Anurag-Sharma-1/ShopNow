@@ -7,8 +7,10 @@ import android.os.Bundle;
 
 import com.example.shopnow.R;
 import com.example.shopnow.adapters.CategoryAdapter;
+import com.example.shopnow.adapters.ProductAdapter;
 import com.example.shopnow.databinding.ActivityMainBinding;
 import com.example.shopnow.model.Category;
+import com.example.shopnow.model.Product;
 
 import java.util.ArrayList;
 
@@ -18,12 +20,21 @@ public class MainActivity extends AppCompatActivity {
     CategoryAdapter categoryAdapter;
     ArrayList<Category> categories;
 
+    ProductAdapter productAdapter;
+    ArrayList<Product> products;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        initCategories();
+        initProducts();
+
+    }
+
+    void initCategories() {
         categories =new ArrayList<>();
         categories.add(new Category("Sports & Outdoor", "https://cdn-icons.flaticon.com/png/512/3311/premium/3311567.png?token=exp=1655182283~hmac=b5231247ed03814c68c1e05d17cd4b99", "#D1E2FF", "Here you will get all kind of sports related items", 1));
         categories.add(new Category("Consumer & Electronics", "https://cdn-icons.flaticon.com/png/512/536/premium/536255.png?token=exp=1655182344~hmac=2fabe80fbeff6d7938fa20d1f0a8bf26", "#D1E2FF", "Here you will get all kind of electronics related items", 1));
@@ -37,6 +48,23 @@ public class MainActivity extends AppCompatActivity {
         GridLayoutManager layoutManager = new GridLayoutManager(this, 4);
         binding.categoriesList.setLayoutManager(layoutManager);
         binding.categoriesList.setAdapter(categoryAdapter);
-
     }
+
+    void initProducts() {
+        products = new ArrayList<>();
+        products.add(new Product("Stylish Men's Cotton Printed Full Sleeve Formal", "https://m.media-amazon.com/images/I/61utFQXP8GL._AC_UL320_.jpg", "", 12, 12, 1, 1));
+        products.add(new Product("Stylish Men's Cotton Printed Full Sleeve Formal", "https://m.media-amazon.com/images/I/61utFQXP8GL._AC_UL320_.jpg", "", 12, 12, 1, 1));
+        products.add(new Product("Stylish Men's Cotton Printed Full Sleeve Formal", "https://m.media-amazon.com/images/I/61utFQXP8GL._AC_UL320_.jpg", "", 12, 12, 1, 1));
+        products.add(new Product("Stylish Men's Cotton Printed Full Sleeve Formal", "https://m.media-amazon.com/images/I/61utFQXP8GL._AC_UL320_.jpg", "", 12, 12, 1, 1));
+        products.add(new Product("Stylish Men's Cotton Printed Full Sleeve Formal", "https://m.media-amazon.com/images/I/61utFQXP8GL._AC_UL320_.jpg", "", 12, 12, 1, 1));
+        products.add(new Product("Stylish Men's Cotton Printed Full Sleeve Formal", "https://m.media-amazon.com/images/I/61utFQXP8GL._AC_UL320_.jpg", "", 12, 12, 1, 1));
+        products.add(new Product("Stylish Men's Cotton Printed Full Sleeve Formal", "https://m.media-amazon.com/images/I/61utFQXP8GL._AC_UL320_.jpg", "", 12, 12, 1, 1));
+        products.add(new Product("Stylish Men's Cotton Printed Full Sleeve Formal", "https://m.media-amazon.com/images/I/61utFQXP8GL._AC_UL320_.jpg", "", 12, 12, 1, 1));
+        productAdapter = new ProductAdapter(this, products);
+
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
+        binding.productList.setLayoutManager(layoutManager);
+        binding.productList.setAdapter(productAdapter);
+    }
+
 }
