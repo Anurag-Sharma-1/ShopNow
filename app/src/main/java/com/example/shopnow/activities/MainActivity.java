@@ -52,14 +52,15 @@ public class MainActivity extends AppCompatActivity {
 
     void initProducts() {
         products = new ArrayList<>();
-        products.add(new Product("Stylish Men's Cotton Printed Full Sleeve Formal", "https://m.media-amazon.com/images/I/61utFQXP8GL._AC_UL320_.jpg", "", 12, 12, 1, 1));
-        products.add(new Product("Stylish Men's Cotton Printed Full Sleeve Formal", "https://m.media-amazon.com/images/I/61utFQXP8GL._AC_UL320_.jpg", "", 12, 12, 1, 1));
-        products.add(new Product("Stylish Men's Cotton Printed Full Sleeve Formal", "https://m.media-amazon.com/images/I/61utFQXP8GL._AC_UL320_.jpg", "", 12, 12, 1, 1));
-        products.add(new Product("Stylish Men's Cotton Printed Full Sleeve Formal", "https://m.media-amazon.com/images/I/61utFQXP8GL._AC_UL320_.jpg", "", 12, 12, 1, 1));
-        products.add(new Product("Stylish Men's Cotton Printed Full Sleeve Formal", "https://m.media-amazon.com/images/I/61utFQXP8GL._AC_UL320_.jpg", "", 12, 12, 1, 1));
-        products.add(new Product("Stylish Men's Cotton Printed Full Sleeve Formal", "https://m.media-amazon.com/images/I/61utFQXP8GL._AC_UL320_.jpg", "", 12, 12, 1, 1));
-        products.add(new Product("Stylish Men's Cotton Printed Full Sleeve Formal", "https://m.media-amazon.com/images/I/61utFQXP8GL._AC_UL320_.jpg", "", 12, 12, 1, 1));
-        products.add(new Product("Stylish Men's Cotton Printed Full Sleeve Formal", "https://m.media-amazon.com/images/I/61utFQXP8GL._AC_UL320_.jpg", "", 12, 12, 1, 1));
+        products.add(new Product("Stylish Men's Cotton Formal", "https://m.media-amazon.com/images/I/61PgOZ-IH0L._AC_UL320_.jpg", "", 12, 12, 1, 1));
+        products.add(new Product("Stylish Men's Cotton Formal", "https://m.media-amazon.com/images/I/61PgOZ-IH0L._AC_UL320_.jpg", "", 12, 12, 1, 1));
+        products.add(new Product("Stylish Men's Cotton Formal", "https://m.media-amazon.com/images/I/61PgOZ-IH0L._AC_UL320_.jpg", "", 12, 12, 1, 1));
+        products.add(new Product("Stylish Men's Cotton Formal", "https://m.media-amazon.com/images/I/61PgOZ-IH0L._AC_UL320_.jpg", "", 12, 12, 1, 1));
+        products.add(new Product("Stylish Men's Cotton Formal", "https://m.media-amazon.com/images/I/61PgOZ-IH0L._AC_UL320_.jpg", "", 12, 12, 1, 1));
+        products.add(new Product("Stylish Men's Cotton Formal", "https://m.media-amazon.com/images/I/61PgOZ-IH0L._AC_UL320_.jpg", "", 12, 12, 1, 1));
+        products.add(new Product("Stylish Men's Cotton Formal", "https://m.media-amazon.com/images/I/61PgOZ-IH0L._AC_UL320_.jpg", "", 12, 12, 1, 1));
+        products.add(new Product("Stylish Men's Cotton Formal", "https://m.media-amazon.com/images/I/61PgOZ-IH0L._AC_UL320_.jpg", "", 12, 12, 1, 1));
+
         productAdapter = new ProductAdapter(this, products);
 
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
