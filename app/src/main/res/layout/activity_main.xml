@@ -49,13 +49,17 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="10dp">
+                android:layout_height="wrap_content">
 
                 <org.imaginativeworld.whynotimagecarousel.ImageCarousel
                     android:id="@+id/carousel"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp" />
+                    android:layout_height="160dp"
+                    app:autoPlay="true"
+                    app:showBottomShadow="false"
+                    app:showCaption="false"
+                    app:showNavigationButtons="false"
+                    app:showTopShadow="false" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView

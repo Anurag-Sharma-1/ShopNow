@@ -12,6 +12,8 @@ import com.example.shopnow.databinding.ActivityMainBinding;
 import com.example.shopnow.model.Category;
 import com.example.shopnow.model.Product;
 
+import org.imaginativeworld.whynotimagecarousel.model.CarouselItem;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,7 +33,15 @@ public class MainActivity extends AppCompatActivity {
 
         initCategories();
         initProducts();
+        initSlider();
 
+    }
+
+    private void initSlider() {
+        binding.carousel.addData(new CarouselItem("https://i.pinimg.com/736x/e6/ee/2a/e6ee2a5888b79c216ba21bc2ca6c8939.jpg", ""));
+        binding.carousel.addData(new CarouselItem("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpUuciHt98I7QuvzdW0-AMUCsQLTV5KQplVCuY2PX7jS0CBRFMyJyK-nOqJTiGozTPSl0&usqp=CAU", ""));
+        binding.carousel.addData(new CarouselItem("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOgvNGrwNHTJwV4FsH5AZK7D9nEtjz-kztJw&usqp=CAU", ""));
+        binding.carousel.addData(new CarouselItem("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNS4z_1u6ia0kY61Sb92Qa4g3DXeelRpa35U5Y0zTyFC_yYJyQJ-LmuIQsCebAHTgfm8Q&usqp=CAU", ""));
     }
 
     void initCategories() {
@@ -59,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         products.add(new Product("Stylish Men's Cotton Formal", "https://m.media-amazon.com/images/I/61PgOZ-IH0L._AC_UL320_.jpg", "", 12, 12, 1, 1));
         products.add(new Product("Stylish Men's Cotton Formal", "https://m.media-amazon.com/images/I/61PgOZ-IH0L._AC_UL320_.jpg", "", 12, 12, 1, 1));
         products.add(new Product("Stylish Men's Cotton Formal", "https://m.media-amazon.com/images/I/61PgOZ-IH0L._AC_UL320_.jpg", "", 12, 12, 1, 1));
-        products.add(new Product("Stylish Men's Cotton Formal", "https://m.media-amazon.com/images/I/61PgOZ-IH0L._AC_UL320_.jpg", "", 12, 12, 1, 1));
+
 
         productAdapter = new ProductAdapter(this, products);
 
