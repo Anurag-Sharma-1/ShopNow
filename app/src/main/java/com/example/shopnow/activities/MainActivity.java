@@ -4,15 +4,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.os.Bundle;
+import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.shopnow.R;
 import com.example.shopnow.adapters.CategoryAdapter;
 import com.example.shopnow.adapters.ProductAdapter;
 import com.example.shopnow.databinding.ActivityMainBinding;
 import com.example.shopnow.model.Category;
 import com.example.shopnow.model.Product;
+import com.example.shopnow.utils.Constants;
 
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -46,19 +57,57 @@ public class MainActivity extends AppCompatActivity {
 
     void initCategories() {
         categories =new ArrayList<>();
-        categories.add(new Category("Sports & Outdoor", "https://cdn-icons.flaticon.com/png/512/3311/premium/3311567.png?token=exp=1655182283~hmac=b5231247ed03814c68c1e05d17cd4b99", "#D1E2FF", "Here you will get all kind of sports related items", 1));
-        categories.add(new Category("Consumer & Electronics", "https://cdn-icons.flaticon.com/png/512/536/premium/536255.png?token=exp=1655182344~hmac=2fabe80fbeff6d7938fa20d1f0a8bf26", "#D1E2FF", "Here you will get all kind of electronics related items", 1));
-        categories.add(new Category("Food & Groceries", "https://cdn-icons.flaticon.com/png/512/3514/premium/3514242.png?token=exp=1655182243~hmac=842decd012bcd99e67fefe596eb38a67", "#D1E2FF", "Here you will get all kind of sports related items", 1));
-        categories.add(new Category("Home & Lifestyle", "https://cdn-icons.flaticon.com/png/512/874/premium/874720.png?token=exp=1655182180~hmac=f8066d11837809dc2c20b3ab12c6d888", "#D1E2FF", "Here you will get all kind of sports related items", 1));
-        categories.add(new Category("Men's Clothing", "https://cdn-icons-png.flaticon.com/512/892/892458.png", "#D1E2FF", "Here you will get all kind of sports related items", 1));
-        categories.add(new Category("Women's Fashion", "https://cdn-icons-png.flaticon.com/512/3534/3534312.png", "#D1E2FF", "Here you will get all kind of sports related items", 1));
 
         categoryAdapter = new CategoryAdapter(this, categories);
+
+        getCategories();
 
         GridLayoutManager layoutManager = new GridLayoutManager(this, 4);
         binding.categoriesList.setLayoutManager(layoutManager);
         binding.categoriesList.setAdapter(categoryAdapter);
     }
+
+
+    void getCategories(){
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        StringRequest request = new StringRequest(Request.Method.GET, Constants.GET_CATEGORIES_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.e("err",response);
+                    JSONObject mainObj = new JSONObject(response);
+                    if(mainObj.getString("status").equals("success")){
+                        JSONArray categoriesArray = mainObj.getJSONArray("categories");
+                        for (int i = 0; i < categoriesArray.length(); i++){
+                            JSONObject object = categoriesArray.getJSONObject(i);
+                            Category category = new Category(
+                                    object.getString("name"),
+                                    Constants.CATEGORIES_IMAGE_URL + object.getString("icon"),
+                                    object.getString("color"),
+                                    object.getString("brief"),
+                                    object.getInt("id")
+                            );
+                            categories.add(category);
+                        }
+                        categoryAdapter.notifyDataSetChanged();
+                    }else {
+                        // Do nothing
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        queue.add(request);
+    }
+
 
     void initProducts() {
         products = new ArrayList<>();
