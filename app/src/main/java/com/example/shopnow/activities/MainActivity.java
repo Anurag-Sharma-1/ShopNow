@@ -49,10 +49,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initSlider() {
-        binding.carousel.addData(new CarouselItem("https://i.pinimg.com/736x/e6/ee/2a/e6ee2a5888b79c216ba21bc2ca6c8939.jpg", ""));
-        binding.carousel.addData(new CarouselItem("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpUuciHt98I7QuvzdW0-AMUCsQLTV5KQplVCuY2PX7jS0CBRFMyJyK-nOqJTiGozTPSl0&usqp=CAU", ""));
-        binding.carousel.addData(new CarouselItem("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOgvNGrwNHTJwV4FsH5AZK7D9nEtjz-kztJw&usqp=CAU", ""));
-        binding.carousel.addData(new CarouselItem("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNS4z_1u6ia0kY61Sb92Qa4g3DXeelRpa35U5Y0zTyFC_yYJyQJ-LmuIQsCebAHTgfm8Q&usqp=CAU", ""));
+        getRecentOffers();
     }
 
     void initCategories() {
@@ -109,18 +106,71 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    void getRecentProducts() {
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        String url = Constants.GET_PRODUCTS_URL + "?count=8";
+        StringRequest request = new StringRequest(Request.Method.GET, url, response -> {
+            try {
+                JSONObject object = new JSONObject(response);
+                if(object.getString("status").equals("success")){
+                    JSONArray productsArray = object.getJSONArray("products");
+                    for(int i =0; i< productsArray.length(); i++) {
+                        JSONObject childObj = productsArray.getJSONObject(i);
+                        Product product = new Product(
+                                childObj.getString("name"),
+                                Constants.PRODUCTS_IMAGE_URL + childObj.getString("image"),
+                                childObj.getString("status"),
+                                childObj.getDouble("price"),
+                                childObj.getDouble("price_discount"),
+                                childObj.getInt("stock"),
+                                childObj.getInt("id")
+
+                        );
+                        products.add(product);
+                    }
+                    productAdapter.notifyDataSetChanged();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, error -> { });
+
+        queue.add(request);
+    }
+
+
+    void getRecentOffers() {
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        StringRequest request = new StringRequest(Request.Method.GET, Constants.GET_OFFERS_URL, response -> {
+            try {
+                JSONObject object = new JSONObject(response);
+                if(object.getString("status").equals("success")) {
+                    JSONArray offerArray = object.getJSONArray("news_infos");
+                    for(int i =0; i < offerArray.length(); i++) {
+                        JSONObject childObj =  offerArray.getJSONObject(i);
+                        binding.carousel.addData(
+                                new CarouselItem(
+                                        Constants.NEWS_IMAGE_URL + childObj.getString("image"),
+                                        childObj.getString("title")
+                                )
+                        );
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, error -> {});
+        queue.add(request);
+    }
+
+
     void initProducts() {
         products = new ArrayList<>();
-        products.add(new Product("Stylish Men's Cotton Formal", "https://m.media-amazon.com/images/I/61PgOZ-IH0L._AC_UL320_.jpg", "", 12, 12, 1, 1));
-        products.add(new Product("Stylish Men's Cotton Formal", "https://m.media-amazon.com/images/I/61PgOZ-IH0L._AC_UL320_.jpg", "", 12, 12, 1, 1));
-        products.add(new Product("Stylish Men's Cotton Formal", "https://m.media-amazon.com/images/I/61PgOZ-IH0L._AC_UL320_.jpg", "", 12, 12, 1, 1));
-        products.add(new Product("Stylish Men's Cotton Formal", "https://m.media-amazon.com/images/I/61PgOZ-IH0L._AC_UL320_.jpg", "", 12, 12, 1, 1));
-        products.add(new Product("Stylish Men's Cotton Formal", "https://m.media-amazon.com/images/I/61PgOZ-IH0L._AC_UL320_.jpg", "", 12, 12, 1, 1));
-        products.add(new Product("Stylish Men's Cotton Formal", "https://m.media-amazon.com/images/I/61PgOZ-IH0L._AC_UL320_.jpg", "", 12, 12, 1, 1));
-        products.add(new Product("Stylish Men's Cotton Formal", "https://m.media-amazon.com/images/I/61PgOZ-IH0L._AC_UL320_.jpg", "", 12, 12, 1, 1));
-
-
         productAdapter = new ProductAdapter(this, products);
+
+        getRecentProducts();
 
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         binding.productList.setLayoutManager(layoutManager);
