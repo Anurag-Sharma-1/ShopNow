@@ -1,6 +1,7 @@
 package com.example.shopnow.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.shopnow.R;
+import com.example.shopnow.activities.ProductDetailActivity;
 import com.example.shopnow.databinding.ItemProductBinding;
 import com.example.shopnow.model.Product;
 
@@ -40,10 +42,25 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 .into(holder.binding.image);
         holder.binding.label.setText(product.getName());
         holder.binding.price.setText("₹ " + product.getPrice());
+
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ProductDetailActivity.class);
+                intent.putExtra("name", product.getName());
+                intent.putExtra("image", product.getImage());
+                intent.putExtra("id", product.getId());
+                intent.putExtra("price", product.getPrice());
+                context.startActivity(intent);
+            }
+        });
     }
+
 
     @Override
     public int getItemCount() {
+
         return products.size();
     }
 
