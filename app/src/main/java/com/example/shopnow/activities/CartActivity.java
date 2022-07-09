@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.shopnow.R;
 import com.example.shopnow.adapters.CartAdapter;
@@ -57,6 +59,15 @@ public class CartActivity extends AppCompatActivity {
         binding.cartList.setAdapter(adapter);
 
         binding.subtotal.setText(String.format("₹ %.2f",cart.getTotalPrice()));
+
+
+        binding.continueBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(CartActivity.this, CheckoutActivity.class));
+            }
+        });
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
